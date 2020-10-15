@@ -1,17 +1,18 @@
-import React from 'react'
+import React from 'react';
 
 const Search = (props) => {
-  const { onSearch } = props
+  const {onSearch} = props;
 
   return (
-    <div className="p-b-1">
+    <div className='p-b-1'>
       <input
-        type="search"
-        className="form-control"
-        placeholder="Søg brugere"
-        onChange={onSearch.bind(this)} />
+        type='search'
+        className='form-control'
+        placeholder='Søg brugere'
+        onChange={onSearch.bind(this)}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
