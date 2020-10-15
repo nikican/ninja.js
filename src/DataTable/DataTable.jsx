@@ -66,7 +66,7 @@ class DataTable extends React.Component {
         </table>
         <Pagination
           currentPageNumber={currentPageNumber}
-          totalNumberOfPages={totalNumberOfPages}
+          numberOfPages={totalNumberOfPages}
           onChange={this.changeToPageNumber.bind(this)}
         />
       </div>
