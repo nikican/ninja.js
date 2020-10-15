@@ -4,7 +4,7 @@ const Page = (props) => {
   const {pageNumber, currentPageNumber, onChange} = props;
 
   const isActivePage = () => {
-    return currentPageNumber == pageNumber;
+    return currentPageNumber === pageNumber;
   };
 
   const renderedPageNumber = () => {

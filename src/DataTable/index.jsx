@@ -17,7 +17,7 @@ class DataTable extends React.Component {
 
   calculateTotalNumberOfPages(rows) {
     const {rowsPerPage} = this.props;
-    if (rowsPerPage == 0) return 0;
+    if (rowsPerPage === 0) return 0;
     return Math.ceil(rows.length / rowsPerPage);
   }
 
