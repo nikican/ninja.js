@@ -11,7 +11,7 @@ const App = () => {
 
   return (
     <div className='container mt-3'>
-      <DataTable rows={userData} locale={locale} rowsPerPage={rowsPerPage} />
+      <DataTable data={userData} locale={locale} rowsPerPage={rowsPerPage} />
     </div>
   );
 };
