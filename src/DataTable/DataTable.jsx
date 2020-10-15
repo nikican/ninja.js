@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Pagination from './Pagination';
-import Row from './Row';
+import DataTableRow from './DataTableRow';
 import Search from './Search';
 
 class DataTable extends React.Component {
@@ -55,7 +55,7 @@ class DataTable extends React.Component {
   render() {
     const {rows, currentPageNumber, totalNumberOfPages} = this.state;
     const rowsToRender = rows
-      .map((row) => <Row key={row.per_id} row={row} />)
+      .map((row) => <DataTableRow key={row.per_id} {...row} />)
       .slice(...this.rowsInPageNumber(currentPageNumber));
 
     return (
