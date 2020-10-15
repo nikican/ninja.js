@@ -1,15 +1,19 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import DataTable from './DataTable';
-import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className='container mt-3'>
-        <DataTable rows={this.props.rows} locale='da' rowsPerPage={5} />
-      </div>
-    );
-  }
-}
+import './App.css';
+import data from './data.json';
+
+const App = () => {
+  const [userData] = useState(data['user-data']);
+  const [locale] = useState('da');
+  const [rowsPerPage] = useState(5);
+
+  return (
+    <div className='container mt-3'>
+      <DataTable rows={userData} locale={locale} rowsPerPage={rowsPerPage} />
+    </div>
+  );
+};
 
 export default App;
