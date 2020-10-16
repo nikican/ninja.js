@@ -6,12 +6,11 @@ import data from './data.json';
 
 const App = () => {
   const [userData] = useState(data['user-data']);
-  const [locale] = useState('da');
   const [rowsPerPage] = useState(5);
 
   return (
     <div className='container mt-3'>
-      <DataTable data={userData} locale={locale} rowsPerPage={rowsPerPage} />
+      <DataTable data={userData} rowsPerPage={rowsPerPage} />
     </div>
   );
 };

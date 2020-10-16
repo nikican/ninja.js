@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes, {string} from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Pagination from './Pagination';
 import DataTableRow from './DataTableRow';
 import Search from './Search';
 
-const DataTable = ({data, locale, rowsPerPage = 40}) => {
+const DataTable = ({data, rowsPerPage = 40}) => {
   const [filteredData, setFilteredData] = useState(data);
   const [currentPageNumber, setCurrentPageNumber] = useState(0); // zero indexed
   const [numberOfPages, setNumberOfPages] = useState(1);
@@ -76,7 +76,6 @@ DataTable.propTypes = {
     })
   ).isRequired,
   rowsPerPage: PropTypes.number,
-  locale: string,
 };
 
 export default DataTable;
