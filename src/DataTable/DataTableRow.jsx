@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 const DataTableRow = ({edit_path: editPath, name1: name, email}) => (
   <tr>
     <td>
-      <a href={editPath}>{name}</a>
+      <a href={editPath} target='_blank' rel='noopener noreferrer'>
+        {name}
+      </a>
       <br />
       <small>{email}</small>
     </td>

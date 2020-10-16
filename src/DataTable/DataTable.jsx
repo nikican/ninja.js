@@ -12,11 +12,10 @@ const DataTable = ({data, locale, rowsPerPage = 40}) => {
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    let filteredData = data.filter(
+    const filteredData = (data ?? []).filter(
       (item) =>
-        item.name1.toLowerCase().includes(searchText.toLowerCase()) ||
-        (item.email &&
-          item.email.toLowerCase().includes(searchText.toLowerCase()))
+        includesSubstringIgnoringCase(item.name1, searchText) ||
+        includesSubstringIgnoringCase(item.email, searchText)
     );
 
     setFilteredData(filteredData);
@@ -24,24 +23,28 @@ const DataTable = ({data, locale, rowsPerPage = 40}) => {
 
   useEffect(() => {
     const numberOfPages =
-      rowsPerPage === 0 ? 0 : Math.ceil(filteredData.length / rowsPerPage);
+      rowsPerPage <= 0 ? 1 : Math.ceil(filteredData.length / rowsPerPage);
 
     setNumberOfPages(numberOfPages);
-  }, [filteredData.length, rowsPerPage]);
+  }, [rowsPerPage, filteredData.length]);
 
-  const onSearch = ({target}) => {
+  const includesSubstringIgnoringCase = (text, substring) =>
+    text && text.toLowerCase().includes(substring.toLowerCase());
+
+  const search = ({target}) => {
     const text = target.value;
+
     setSearchText(text);
     setCurrentPageNumber(0);
   };
 
-  const changeToPageNumber = (pageNumber) => {
+  const changePage = (pageNumber) => {
     setCurrentPageNumber(pageNumber);
   };
 
   return (
     <div>
-      <Search onSearch={onSearch} />
+      <Search onSearch={search} />
       <table>
         <tbody>
           {filteredData
@@ -57,7 +60,7 @@ const DataTable = ({data, locale, rowsPerPage = 40}) => {
       <Pagination
         currentPageNumber={currentPageNumber}
         numberOfPages={numberOfPages}
-        onChange={changeToPageNumber}
+        onChangePage={changePage}
       />
     </div>
   );
