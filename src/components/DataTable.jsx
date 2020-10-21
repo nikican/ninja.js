@@ -12,7 +12,7 @@ const DataTable = ({data, rowsPerPage = 40}) => {
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-    const filteredData = (data ?? []).filter(
+    const filteredData = data.filter(
       (item) =>
         includesSubstringIgnoringCase(item.name1, searchText) ||
         includesSubstringIgnoringCase(item.email, searchText)
@@ -45,23 +45,29 @@ const DataTable = ({data, rowsPerPage = 40}) => {
   return (
     <div>
       <Search onSearch={search} />
-      <table>
-        <tbody>
-          {filteredData
-            .slice(
-              currentPageNumber * rowsPerPage,
-              currentPageNumber * rowsPerPage + rowsPerPage
-            )
-            .map((row) => (
-              <DataTableRow key={row.per_id} {...row} />
-            ))}
-        </tbody>
-      </table>
-      <Pagination
-        currentPageNumber={currentPageNumber}
-        numberOfPages={numberOfPages}
-        onChangePage={changePage}
-      />
+      {filteredData.length > 0 ? (
+        <>
+          <table>
+            <tbody>
+              {filteredData
+                .slice(
+                  currentPageNumber * rowsPerPage,
+                  currentPageNumber * rowsPerPage + rowsPerPage
+                )
+                .map((row) => (
+                  <DataTableRow key={row.per_id} {...row} />
+                ))}
+            </tbody>
+          </table>
+          <Pagination
+            currentPageNumber={currentPageNumber}
+            numberOfPages={numberOfPages}
+            onChangePage={changePage}
+          />
+        </>
+      ) : (
+        <div>No data.</div>
+      )}
     </div>
   );
 };

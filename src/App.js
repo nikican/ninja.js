@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <div className='container mt-3'>
-      <DataTable data={userData} rowsPerPage={rowsPerPage} />
+      <DataTable data={userData ?? []} rowsPerPage={rowsPerPage} />
     </div>
   );
 };
