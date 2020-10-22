@@ -13,6 +13,7 @@ const DataTable = ({
     itemRendererContainer: TableRenderer,
     itemRenderer: TableItemRenderer,
   },
+  searchField = 'name1',
 }) => {
   const [currentPageNumber, setCurrentPageNumber] = useState(0); // zero indexed
   const [numberOfPages, setNumberOfPages] = useState(1);
@@ -21,10 +22,8 @@ const DataTable = ({
   const includesSubstringIgnoringCase = (text, substring) =>
     text && text.toLowerCase().includes(substring.toLowerCase());
 
-  const filteredData = (data ?? []).filter(
-    (item) =>
-      includesSubstringIgnoringCase(item.name1, searchText) ||
-      includesSubstringIgnoringCase(item.email, searchText)
+  const filteredData = (data ?? []).filter((item) =>
+    includesSubstringIgnoringCase(item[searchField], searchText)
   );
 
   useEffect(() => {
