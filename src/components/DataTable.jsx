@@ -2,24 +2,30 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import Pagination from './Pagination';
-import DataTableRow from './DataTableRow';
 import Search from './Search';
+import TableRenderer from './TableRenderer';
+import TableItemRenderer from './TableItemRenderer';
 
-const DataTable = ({data, rowsPerPage = 40}) => {
-  const [filteredData, setFilteredData] = useState(data);
+const DataTable = ({
+  data,
+  rowsPerPage = 40,
+  dataDisplay = {
+    itemRendererContainer: TableRenderer,
+    itemRenderer: TableItemRenderer,
+  },
+}) => {
   const [currentPageNumber, setCurrentPageNumber] = useState(0); // zero indexed
   const [numberOfPages, setNumberOfPages] = useState(1);
   const [searchText, setSearchText] = useState('');
 
-  useEffect(() => {
-    const filteredData = data.filter(
-      (item) =>
-        includesSubstringIgnoringCase(item.name1, searchText) ||
-        includesSubstringIgnoringCase(item.email, searchText)
-    );
+  const includesSubstringIgnoringCase = (text, substring) =>
+    text && text.toLowerCase().includes(substring.toLowerCase());
 
-    setFilteredData(filteredData);
-  }, [searchText, data]);
+  const filteredData = (data ?? []).filter(
+    (item) =>
+      includesSubstringIgnoringCase(item.name1, searchText) ||
+      includesSubstringIgnoringCase(item.email, searchText)
+  );
 
   useEffect(() => {
     const numberOfPages =
@@ -27,9 +33,6 @@ const DataTable = ({data, rowsPerPage = 40}) => {
 
     setNumberOfPages(numberOfPages);
   }, [rowsPerPage, filteredData.length]);
-
-  const includesSubstringIgnoringCase = (text, substring) =>
-    text && text.toLowerCase().includes(substring.toLowerCase());
 
   const search = ({target}) => {
     const text = target.value;
@@ -42,23 +45,26 @@ const DataTable = ({data, rowsPerPage = 40}) => {
     setCurrentPageNumber(pageNumber);
   };
 
+  const {
+    itemRenderer: ItemRenderer,
+    itemRendererContainer: ItemRendererContainer,
+  } = dataDisplay;
+
   return (
     <div>
       <Search onSearch={search} />
       {filteredData.length > 0 ? (
         <>
-          <table>
-            <tbody>
-              {filteredData
-                .slice(
-                  currentPageNumber * rowsPerPage,
-                  currentPageNumber * rowsPerPage + rowsPerPage
-                )
-                .map((row) => (
-                  <DataTableRow key={row.per_id} {...row} />
-                ))}
-            </tbody>
-          </table>
+          <ItemRendererContainer>
+            {filteredData
+              .slice(
+                currentPageNumber * rowsPerPage,
+                currentPageNumber * rowsPerPage + rowsPerPage
+              )
+              .map((row) => (
+                <ItemRenderer key={row.per_id} {...row} />
+              ))}
+          </ItemRendererContainer>
           <Pagination
             currentPageNumber={currentPageNumber}
             numberOfPages={numberOfPages}
