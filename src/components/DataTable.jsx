@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import Pagination from './Pagination';
@@ -16,7 +16,6 @@ const DataTable = ({
   searchField = 'name1',
 }) => {
   const [currentPageNumber, setCurrentPageNumber] = useState(0); // zero indexed
-  const [numberOfPages, setNumberOfPages] = useState(1);
   const [searchText, setSearchText] = useState('');
 
   const includesSubstringIgnoringCase = (text, substring) =>
@@ -26,12 +25,8 @@ const DataTable = ({
     includesSubstringIgnoringCase(item[searchField], searchText)
   );
 
-  useEffect(() => {
-    const numberOfPages =
-      rowsPerPage <= 0 ? 1 : Math.ceil(filteredData.length / rowsPerPage);
-
-    setNumberOfPages(numberOfPages);
-  }, [rowsPerPage, filteredData.length]);
+  const numberOfPages =
+    rowsPerPage <= 0 ? 1 : Math.ceil(filteredData.length / rowsPerPage);
 
   const search = ({target}) => {
     const text = target.value;
